@@ -973,13 +973,13 @@ class Pt{
     this.y=init?Math.random()*H:H+10;
 
     // size (some small, some bright sparks)
-    this.r=Math.random()*1.8+.3;
+    this.r=Math.random()*2.8+.6;
 
     // upward speed (fast like spark)
-    this.s=Math.random()*1.2+.3;
+    this.s=Math.random()*2+.8;
 
     // glow intensity
-    this.o=Math.random()*.8+.2;
+    this.o=Math.random()*1+.5;
 
     // random horizontal movement
     this.d=(Math.random()-.5)*0.8;
@@ -1004,8 +1004,8 @@ class Pt{
     cx.beginPath();
 
     // glowing effect
-    let glow = cx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*6);
-    glow.addColorStop(0,`rgba(255,220,120,${this.o})`);
+    let glow = cx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*10);
+    glow.addColorStop(0,`rgba(255,230,150,${this.o})`);
     glow.addColorStop(0.3,`rgba(201,168,76,${this.o})`);
     glow.addColorStop(1,'rgba(201,168,76,0)');
 
@@ -1014,7 +1014,7 @@ class Pt{
     cx.fill();
   }
 }
-for(let i=0;i<220;i++)P.push(new Pt(true));
+for(let i=0;i<450;i++)P.push(new Pt(true));
 (function loop(){
   cx.clearRect(0,0,W,H);
   cx.globalCompositeOperation = "lighter";
