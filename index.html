@@ -980,7 +980,7 @@ class Pt{
     this.s=Math.random()*2+.8;
 
     // glow intensity
-    this.o=Math.random()*1+.5;
+    this.o=Math.random()*0.6+.2;
 
     // random horizontal movement
     this.d=(Math.random()-.5)*0.8;
@@ -1015,7 +1015,7 @@ class Pt{
     cx.fill();
   }
 }
-for(let i=0;i<120;i++)P.push(new Pt(true));
+for(let i=0;i<110;i++)P.push(new Pt(true));
 (function loop(){
   cx.clearRect(0,0,W,H);
   cx.globalCompositeOperation = "lighter";
