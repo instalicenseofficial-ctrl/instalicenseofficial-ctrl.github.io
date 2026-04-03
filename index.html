@@ -970,18 +970,54 @@ rs();window.addEventListener('resize',rs);
 class Pt{
   constructor(init){
     this.x=Math.random()*W;
-    this.y=init?Math.random()*H:H+8;
-    this.r=Math.random()*.9+.2;
-    this.s=Math.random()*.35+.1;
-    this.o=Math.random()*.45+.08;
-    this.d=(Math.random()-.5)*.35;
+    this.y=init?Math.random()*H:H+10;
+
+    // size (some small, some bright sparks)
+    this.r=Math.random()*1.8+.3;
+
+    // upward speed (fast like spark)
+    this.s=Math.random()*1.2+.3;
+
+    // glow intensity
+    this.o=Math.random()*.8+.2;
+
+    // random horizontal movement
+    this.d=(Math.random()-.5)*0.8;
+
+    // flicker effect
+    this.f=Math.random()*0.05;
   }
-  update(){this.y-=this.s;this.x+=this.d;if(this.y<-8)Object.assign(this,new Pt(false));}
-  draw(){cx.beginPath();cx.arc(this.x,this.y,this.r,0,Math.PI*2);cx.fillStyle=`rgba(201,168,76,${this.o})`;cx.fill();}
+
+  update(){
+    this.y-=this.s;
+    this.x+=this.d;
+
+    // flicker (changing brightness)
+    this.o += (Math.random()-0.5)*this.f;
+
+    if(this.y<-10){
+      Object.assign(this,new Pt(false));
+    }
+  }
+
+  draw(){
+    cx.beginPath();
+
+    // glowing effect
+    let glow = cx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*6);
+    glow.addColorStop(0,`rgba(255,220,120,${this.o})`);
+    glow.addColorStop(0.3,`rgba(201,168,76,${this.o})`);
+    glow.addColorStop(1,'rgba(201,168,76,0)');
+
+    cx.fillStyle=glow;
+    cx.arc(this.x,this.y,this.r*4,0,Math.PI*2);
+    cx.fill();
+  }
 }
-for(let i=0;i<160;i++)P.push(new Pt(true));
+for(let i=0;i<220;i++)P.push(new Pt(true));
 (function loop(){
   cx.clearRect(0,0,W,H);
+  cx.globalCompositeOperation = "lighter";
   P.forEach(p=>{p.update();p.draw();});
   requestAnimationFrame(loop);
 })();
